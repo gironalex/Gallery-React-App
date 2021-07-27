@@ -1,5 +1,18 @@
 # Gallery-React-App
- For this project, I'll use the very popular and in-demand React library to create an image gallery app.
+For this project, I'll use the very popular and in-demand React library to create an image gallery app.
+
+# Flicker API key
+This project uses an API key for the images it displays. Please use your own API key from Flicker or apply for a non commercial key found in the Flicker website.
+
+Once you have obtained the Flicker key, create a config.js file.
+
+The config.js file should look like this:
+const apiKey = 'YOUR API KEY';
+export default apiKey;
+
+Import your API key into your application, preferably into src/App.js, and save it to a variable like you would any other module, and use the variable where applicable.
+
+NOTE: This config.js file **must** be listed in the .gitignore file so it won’t be committed to your GitHub repository.
 
 # Getting Started with Create React App
 

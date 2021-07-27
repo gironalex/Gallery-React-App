@@ -3,25 +3,24 @@ import React, { Component } from 'react';
 class SearchForm extends Component {
    
     state = {
-        textValue: ""
+      textValue: ""
     }
 
     handleSearchChange = (e) => {
-        this.setState( { textValue: e.target.value } );
+      this.setState( { textValue: e.target.value } );
     }
     
     handleSearchSubmit = (e) => {
-        e.preventDefault();
-        // NOTE: Need to define handleSearch function on PhotoContainer.js
-        this.props.handleSearch(this.query.value);
-        e.currentTarget.reset();
+      e.preventDefault();
+      this.props.handleSearch(this.query.value);
+      e.currentTarget.reset();
     }
 
     render () {
     return (
         <form 
-            class="search-form" 
-            onSubmit={ this.handleSearchSubmit }>
+          class="search-form" 
+          onSubmit={ this.handleSearchSubmit }>
           <input 
             type="search" 
             name="search" 
