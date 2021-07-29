@@ -1,10 +1,12 @@
 import React from 'react';
 
-const Photo = (props) => {
+const Photo = ({id, title, secret, server}) => {
+  
+  let url = `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`;
+
   return (
     <li>
-      {// NOTE: May Have to change the props paths}
-      <img src={props.url} alt="" />
+      <img src={url} alt={title} />
     </li>
   )
 }

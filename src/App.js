@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  BrowserRouter, Redirect,
+  BrowserRouter, Redirect, 
   Route, Switch
 } from 'react-router-dom';
 import axios from 'axios';
@@ -19,16 +19,40 @@ class App extends Component {
   state = {
     sunsets: [],
     waterfalls: [],
-    rainbows: [],
-    photos: [],
+    rivers: [],
+    searchPhotos: [],
+    searchText: "",
     loading: true
   }
 
-  handleSearch = (query) => {
-    axios.get(``)
+  componentDidMount = () => {
+    this.flickerRequest();
+  }
+
+  flickerRequest = () => {
+    const navIcons = ["sunsets", "waterfalls", "rivers"];
+    // eslint-disable-next-line array-callback-return
+    navIcons.map( nav => {
+      axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${nav}&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
-          photos: ,
+          [nav]: response.data.photos.photo,
+          loading: false
+        });
+      })
+      .catch(error => {
+        console.log('Error fetching and parsing data', error);
+      });
+    });
+  }
+  
+  handleSearch = (query) => {
+    this.setState( { loading: true } );
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+      .then(response => {
+        this.setState({ 
+          searchPhotos: response.data.photos.photo,
+          searchText: query,
           loading: false
         });
       })
@@ -41,16 +65,35 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="container">
-          <SearchForm onSearch={this.handleSearch} />
+          <SearchForm  onSearch={this.handleSearch}/>
           <Nav />
-          {this.state.loading ? <p>Loading...</p> :
+          {this.state.loading ? <h1>Loading...</h1> :
             <Switch>
               <Route exact path="/" render={ () => < Redirect to="/sunsets" /> } />
-              <Route exact path="/sunsets" render={ () => < PhotoContainer data={this.state.sunsets} /> } />
-              <Route exact path="/waterfalls" render={ () => < PhotoContainer data={this.state.waterfalls} /> } />
-              <Route exact path="/rainbows" render={ () => < PhotoContainer data={this.state.rainbows} /> } />
-              <Route exact path="/search/:query" render={ () => < PhotoContainer data={this.state.photos} /> } />
-              <Route component={ErrorRoute} />
+             
+              <Route path="/sunsets" render={ () => 
+                                          < PhotoContainer 
+                                            data={this.state.sunsets} 
+                                            name={'Sunsets'}/> } />
+              
+              <Route path="/waterfalls" render={ () => 
+                                          < PhotoContainer 
+                                            data={this.state.waterfalls} 
+                                            name={'Waterfalls'}/> } />
+              
+              <Route path="/rivers" render={ () => 
+                                          < PhotoContainer 
+                                            data={this.state.rivers} 
+                                            name={'Rivers'}/> } />
+              
+              <Route path="/search/:query" render={ ({ match }) => 
+                                          < PhotoContainer 
+                                            data={this.state.searchPhotos}
+                                            update={this.handleSearch}
+                                            querySearch={this.state.searchText}
+                                            queryRoute={match.params.query} /> } />
+              
+              <Route component={ ErrorRoute } />
             </Switch>
           }
         </div>
