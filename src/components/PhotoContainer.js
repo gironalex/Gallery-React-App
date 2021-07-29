@@ -8,7 +8,7 @@ class PhotoContainer extends Component {
 
   componentDidUpdate = () => {
     if (this.props.querySearch !== this.props.queryRoute) {
-      this.props.update(this.props.querySearch)
+      this.props.update(this.props.queryRoute)
     }
   }
 

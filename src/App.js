@@ -71,22 +71,22 @@ class App extends Component {
             <Switch>
               <Route exact path="/" render={ () => < Redirect to="/sunsets" /> } />
              
-              <Route path="/sunsets" render={ () => 
+              <Route exact path="/sunsets" render={ () => 
                                           < PhotoContainer 
                                             data={this.state.sunsets} 
                                             name={'Sunsets'}/> } />
               
-              <Route path="/waterfalls" render={ () => 
+              <Route exact path="/waterfalls" render={ () => 
                                           < PhotoContainer 
                                             data={this.state.waterfalls} 
                                             name={'Waterfalls'}/> } />
               
-              <Route path="/rivers" render={ () => 
+              <Route exact path="/rivers" render={ () => 
                                           < PhotoContainer 
                                             data={this.state.rivers} 
                                             name={'Rivers'}/> } />
               
-              <Route path="/search/:query" render={ ({ match }) => 
+              <Route exact path="/search/:query" render={ ({ match }) => 
                                           < PhotoContainer 
                                             data={this.state.searchPhotos}
                                             update={this.handleSearch}

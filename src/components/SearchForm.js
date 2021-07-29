@@ -3,12 +3,21 @@ import {withRouter} from 'react-router-dom';
 
 class SearchForm extends Component {
 
+    state = {
+      searchText: ""
+    }
+
+    handleChange = (e) => {
+      this.setState({ searchText: e.target.value});
+    }
+
     handleSubmit = (e) => {
       e.preventDefault();
-      let queryOnSubmit = this.query.value;
+      let queryOnSubmit = this.state.searchText;
       this.props.onSearch(queryOnSubmit);
-      let path = `search/${queryOnSubmit}`;
-      this.props.history.push(path);
+      const currentPath = window.location.pathname;
+      let path = `${queryOnSubmit}`;
+      currentPath.includes('search') ? this.props.history.push(path) : this.props.history.push(`search/${queryOnSubmit}`);
       e.currentTarget.reset();
     }
 
@@ -20,7 +29,7 @@ class SearchForm extends Component {
             type="search" 
             name="search" 
             placeholder="Search"
-            ref={(input) => this.query = input}
+            onChange={this.handleChange}
             required/>
           <button type="submit" className="search-button">
             <svg fill="#fff" height="24" viewBox="0 0 23 23" width="24" xmlns="http://www.w3.org/2000/svg">
