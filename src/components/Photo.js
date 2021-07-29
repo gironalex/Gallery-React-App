@@ -1,12 +1,15 @@
+// Photo Component - displays the structure of a single image based on the response from Flicker.
+
 import React from 'react';
 
-const Photo = ({id, title, secret, server}) => {
+const Photo = ( { id, title, secret, server } ) => {
   
-  let url = `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`;
+  // URL formula provided by Flicker
+  let url = `https://live.staticflickr.com/${ server }/${ id }_${ secret }.jpg`;
 
   return (
     <li>
-      <img src={url} alt={title} />
+      <img src={ url } alt={ title } />
     </li>
   )
 }

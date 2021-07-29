@@ -1,3 +1,5 @@
+// Not Found Component - displays a message when a search does not yield a data response from Flicker
+
 import React from 'react';
 
 const NotFound = () => {

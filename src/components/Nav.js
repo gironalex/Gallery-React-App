@@ -1,3 +1,5 @@
+// Nav Component- displays a navigation bar with links to pre-selected searches.
+
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 

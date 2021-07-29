@@ -15,7 +15,7 @@ import ErrorRoute from './components/ErrorRoute.js';
 import apiKey from './config.js';
 
 class App extends Component {
-  
+  // Initializing state and creating arrays to hold the data from the request
   state = {
     sunsets: [],
     waterfalls: [],
@@ -25,6 +25,7 @@ class App extends Component {
     loading: true
   }
 
+  //Calling ComponentDidMount on the flickerRequest function to ensure that the data from the API request gets stored in their respective states.
   componentDidMount = () => {
     this.flickerRequest();
   }
@@ -46,6 +47,7 @@ class App extends Component {
     });
   }
   
+  // Calls on the Flicker API when the search form has been submitted, stores values in their respective state
   handleSearch = (query) => {
     this.setState( { loading: true } );
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
@@ -63,12 +65,14 @@ class App extends Component {
 
   render () {
     return (
+      // Rendering components and routing to their appropiate paths
       <BrowserRouter>
         <div className="container">
           <SearchForm  onSearch={this.handleSearch}/>
           <Nav />
           {this.state.loading ? <h1>Loading...</h1> :
             <Switch>
+              {/* Redirecting to the /sunsets path, this ensures images are always displayed */}
               <Route exact path="/" render={ () => < Redirect to="/sunsets" /> } />
              
               <Route exact path="/sunsets" render={ () => 
@@ -92,7 +96,7 @@ class App extends Component {
                                             update={this.handleSearch}
                                             querySearch={this.state.searchText}
                                             queryRoute={match.params.query} /> } />
-              
+              {/* Catches the routes that are not valid */}
               <Route component={ ErrorRoute } />
             </Switch>
           }

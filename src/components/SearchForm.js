@@ -11,6 +11,7 @@ class SearchForm extends Component {
       this.setState({ searchText: e.target.value});
     }
 
+    // this function will use the current state value of the input element to create a route once the submit button has been clicked.
     handleSubmit = (e) => {
       e.preventDefault();
       let queryOnSubmit = this.state.searchText;
